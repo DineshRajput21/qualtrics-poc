@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Qualtrics from "react-native-qualtrics";
+import { STAR_INTERCEPT_ID, BOOLEAN_INTERCEPT_ID, SURVEY_PROMT_INTERCEPT_ID, SURVEY_NOTIFICATION_INTERCEPT_ID } from "../utils";
+
 const Home = () => {
-
-    useEffect(async () => {
-
-    }, []);
-
-    const showRating = () => {
+    const starFeedback = () => {
         setTimeout(() => {
             try {
-                Qualtrics.evaluateIntercept('SI_0MKDlgd9riEXXmu', async resp => {
+                Qualtrics.evaluateIntercept(STAR_INTERCEPT_ID, async resp => {
                     if (resp.passed) {
-                        var intercept = await Qualtrics.displayIntercept('SI_0MKDlgd9riEXXmu');
+                        var intercept = await Qualtrics.displayIntercept(STAR_INTERCEPT_ID);
                         console.log(resp)
                     } else {
                         console.log('purchase intercept failed:', resp);
@@ -26,9 +23,9 @@ const Home = () => {
 
     const startSurveyPrompt = () => {
         setTimeout(() => {
-            Qualtrics.evaluateIntercept('SI_esNSJK9QsLmD8Q6', async resp => {
+            Qualtrics.evaluateIntercept(SURVEY_PROMT_INTERCEPT_ID, async resp => {
                 if (resp.passed) {
-                    var intercept = await Qualtrics.displayIntercept('SI_esNSJK9QsLmD8Q6');
+                    var intercept = await Qualtrics.displayIntercept(SURVEY_PROMT_INTERCEPT_ID);
                 } else {
                     console.log('Survey intercept failed:', resp);
                 }
@@ -37,9 +34,9 @@ const Home = () => {
     }
     const startSurveyNotification = () => {
         setTimeout(() => {
-            Qualtrics.evaluateIntercept('SI_9tvgaNWYOdricEC', async resp => {
+            Qualtrics.evaluateIntercept(SURVEY_NOTIFICATION_INTERCEPT_ID, async resp => {
                 if (resp.passed) {
-                    var intercept = await Qualtrics.displayIntercept('SI_9tvgaNWYOdricEC');
+                    var intercept = await Qualtrics.displayIntercept(SURVEY_NOTIFICATION_INTERCEPT_ID);
                 } else {
                     console.log('Survey intercept failed:', resp);
                 }
@@ -48,16 +45,15 @@ const Home = () => {
     }
     const yesNoFeedback = () => {
         setTimeout(() => {
-            Qualtrics.evaluateIntercept('SI_8lceMYfXPRwz6qq', async resp => {
+            Qualtrics.evaluateIntercept(BOOLEAN_INTERCEPT_ID, async resp => {
                 if (resp.passed) {
-                    var intercept = await Qualtrics.displayIntercept('SI_8lceMYfXPRwz6qq');
+                    var intercept = await Qualtrics.displayIntercept(BOOLEAN_INTERCEPT_ID);
                 } else {
                     console.log('Survey intercept failed:', resp);
                 }
             });
         }, 1000);
     }
-
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -67,7 +63,7 @@ const Home = () => {
             <TouchableOpacity onPress={() => startSurveyNotification()} style={styles.btnContainer}>
                 <Text style={styles.textStyle}>Start Survey(Notification)</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => showRating()} style={styles.btnContainer}>
+            <TouchableOpacity onPress={() => starFeedback()} style={styles.btnContainer}>
                 <Text style={styles.textStyle}>App Feedback (Emoji/Star)</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => yesNoFeedback()} style={styles.btnContainer}>
